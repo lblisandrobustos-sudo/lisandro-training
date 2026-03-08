@@ -123,6 +123,7 @@ function buildRoutine(ejRows, semRows, alumno) {
     const warmup  = diaRows.filter(r => ['Calentamiento','calentamiento','CALENTAMIENTO'].includes(r['Bloque']));
     const main    = diaRows.filter(r => !['Calentamiento','calentamiento','CALENTAMIENTO'].includes(r['Bloque']));
 
+    const esc = s => String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, ' ').replace(/\r/g, '');
     const toEx = (rows, prefix) => rows.map((r, idx) => {
       const nro   = String(r['Nro'] || (idx + 1));
       const key   = `${dia}||${nro}`;
@@ -131,10 +132,10 @@ function buildRoutine(ejRows, semRows, alumno) {
       return {
         id  : `${prefix}_${dia.replace(/\s/g,'')}_${nro}`.replace(/[^a-z0-9_]/gi, '_'),
         n   : nro + '.',
-        nm  : String(r['Nombre del Ejercicio'] || r['Nombre'] || '—'),
-        bdg : String(badge),
-        pa  : String(pause),
-        nt  : String(r['Nota Técnica'] || r['Nota'] || ''),
+        nm  : esc(r['Nombre del Ejercicio'] || r['Nombre'] || '—'),
+        bdg : esc(badge),
+        pa  : esc(pause),
+        nt  : esc(r['Nota Técnica'] || r['Nota'] || ''),
         yt  : String(r['Video YouTube'] || r['Video'] || '#'),
         rs  : parsePauseSecs(pause),
         se  : extractSeries(String(badge)),
