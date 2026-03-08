@@ -311,10 +311,10 @@ function getLastSeries(bdg) {
 
 function _h(s) {
   return String(s)
-    .replace(/&/g, '&amp;')
+    .replace(/&/g, '&' + 'amp;')
     .replace(/"/g, '&' + 'quot;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+    .replace(/\x3C/g, '&' + 'lt;')
+    .replace(/\x3E/g, '&' + 'gt;');
 }
 
 function card(e, isW) {
